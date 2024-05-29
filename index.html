@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title></title>
+<style type="text/css">
+	.btn{
+		width: 250px;
+		height: 50px;
+		background: #90EE90;
+		border-radius: 40px;
+		border: none;
+		display: block;
+		margin: 50px auto;
+		position: absolute;
+		top: 0px; left: 1200px;
+		font-size: 20px;
+	}
+	.duck{
+		width: 100px;
+		height: 100px;
+		background-size: 100% 100%;
+		position: absolute;
+		z-index: 2;
+	}
+	.score{
+		width: 250px;
+		height: 50px;
+		background: #90EE90;
+		position: absolute;
+		top: 35px; left: 1200px;
+		display: none;
+		font-size: 23px;
+		text-align: center;
+		padding-top: 15px;
+		border-radius: 40px;
+	}
+	.fon{
+		width: 100%;
+		height: 100%;
+	}
+</style>
+</head>
+<body>
+	<div style="width: 100%; height: 970px; display: flex;">
+		<img class="fon" src="r.jpeg">
+		<button class="btn">Start</button>
+		<div class="score">Score: </div>	
+	</div>
+<script type="text/javascript">
+	let btn = document.querySelector(".btn")
+		let score = document.querySelector(".score")
+		let createDucks
+
+		let num = 0
+
+		let topP = [200, 400, 600]
+
+		let getRandom = function(arg1){
+			let random = Math.random()*arg1
+			let round = Math.round(random)
+
+			return round
+		}
+
+		let createDuck = function(){
+		let duck = document.createElement("div")
+		document.body.appendChild(duck)
+
+		duck.classList.add("duck")
+
+
+
+		if(getRandom(2) == 0){
+			duck.style.backgroundImage = "url(di.png)"
+			duck.name = "good"
+		} else if (getRandom(2) == 1){
+			duck.style.backgroundImage = "url(ze.png)"
+			duck.name = "bad"
+		} else if (getRandom(2) == 2){
+			duck.style.backgroundImage = "url(go.png)"
+			duck.name = "norm"
+		}
+
+		duck.style.left = getRandom(1400) + "px"
+		duck.style.top = topP[getRandom(2)] + "px"
+
+		duck.onclick = function(){
+			duck.style.display = "none"
+
+			if(duck.name == "good"){
+				num = num + 2
+				score.innerHTML = "score: " + num + "/10"
+			} else if(duck.name == "bad"){
+				num = num - 1
+				score.innerHTML = "Score: " + num + "/10"
+			} else if(duck.name == "norm"){
+				num = num + 1
+				score.innerHTML = "Score: " + num + "/10"
+			}
+			if(num >= 10){
+				alert("you win")
+			}
+
+		}
+	}
+	let timer = function(){
+		if(num >= 10){
+			alert("you win")
+		} else if(num < 10){
+			alert("you loose")
+		}
+	}
+	btn.onclick = function(){
+		createDucks = setInterval(createDuck, 500)
+		setTimeout(timer, 10000)
+		btn.style.display = "none"
+		score.style.display = "block"
+	}
+
+
+
+</script>
+</body>
+</html>
